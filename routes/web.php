@@ -17,6 +17,9 @@ Route::get('/', function () {
 Route::get('/role', function () {
     return view('role');
 });
+Route::get('/user', function () {
+    return view('users');
+});
 
 
 Auth::routes();

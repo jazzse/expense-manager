@@ -52,7 +52,7 @@
             showModalUpdate(event) {
                 $('tr').on('click', function() {idRole = $(this).prop('id');console.log(idRole);});
                 if (idRole == 1) {
-                    alert('Role cannot be updated!');
+                    alert('Administrator Role cannot be updated/deleted!');
                 }else{
                     this.$refs['update-modal'].show();
                     axios.get('api/role/list/'+idRole).then(function(response){this.getRole = response.data;}.bind(this));

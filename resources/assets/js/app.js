@@ -25,17 +25,12 @@ Vue.use(VueRouter)
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('role-list', require('./components/roles/role-list.vue'));
 Vue.component('role-form', require('./components/roles/role-form.vue'));
+Vue.component('user-list', require('./components/users/user-list.vue'));
+Vue.component('user-form', require('./components/users/user-form.vue'));
 Vue.use(BootstrapVue)
 Vue.use( VuejsDatatableFactory );
 
-// const routes = [
-//   { path: '/', component: require('./components/ExampleComponent.vue') },
-//   { path: '/role', component: require('././views/layouts/role.blade.php') }
-// ]
-  
-// const router = new VueRouter({
-//   routes 
-// })
+// 
 
 
 const app = new Vue({

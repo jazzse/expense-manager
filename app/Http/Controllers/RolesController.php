@@ -30,6 +30,7 @@ class RolesController extends Controller
                     'updated_at'=>Carbon::now()));
         return json_encode($result);
     }
+    
     public function delete($id){
         $getRole = Roles::where('id', $id)->delete();
     }

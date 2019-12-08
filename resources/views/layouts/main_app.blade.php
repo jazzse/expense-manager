@@ -118,10 +118,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
               </li> 
               <li class="nav-item">
-                <a href="../forms/advanced.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Users</p>
-                </a>
+                @if (Route::has('login'))
+                @auth
+                  <a href="/user" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Users</p>
+                  </a>
+                @else
+                  <a href="{{ route('login') }}">Login</a>
+                @endauth
+                  @endif
               </li>
             </ul>
           </li>

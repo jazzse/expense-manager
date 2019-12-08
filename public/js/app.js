@@ -97887,7 +97887,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            users: [],
+            users: {},
             name: ' ',
             email: ' ',
             role: '',
@@ -97911,7 +97911,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.users = response.data;
             }.bind(this));
             var table = $('#datatable').DataTable();
-            table.row.add([this.name, this.email, this.selected, users.created_at]).draw(false);
+            table.row.add([this.name, this.email, this.selected, this.created_at]).draw(false);
             this.$refs['add-modal'].hide();
         },
         onClickApp: function onClickApp(event) {

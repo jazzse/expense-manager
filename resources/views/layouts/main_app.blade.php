@@ -102,6 +102,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </p>
             </a>
           </li>
+          @if (Auth::user()->role == "administrator")
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="fas fa-users-cog"></i>
@@ -140,6 +141,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <p>Expense Categories</p>
                 </a>
               </li> 
+               @endif
               <li class="nav-item">
                 <a href="../forms/advanced.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -148,6 +150,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
             </ul>
           </li>
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

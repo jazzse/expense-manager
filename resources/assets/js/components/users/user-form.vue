@@ -30,7 +30,7 @@
     export default {
         data(){
             return{
-                users: [],
+                users: {},
                 name: ' ',
                 email: ' ',
                 role:'',
@@ -48,7 +48,7 @@
                 var formData = new FormData(document.getElementById("addUserForm"));
                 axios.post('./api/user', formData).then(function(response){this.users = response.data;}.bind(this));
                 var table = $('#datatable').DataTable();
-                table.row.add([this.name,this.email,this.selected,users.created_at]).draw(false)
+                table.row.add([this.name,this.email,this.selected,this.created_at]).draw(false)
                 this.$refs['add-modal'].hide();
             },onClickApp(event) {
                 alert('sample');

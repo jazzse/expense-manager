@@ -21,6 +21,10 @@ Route::get('/user', function () {
     return view('users');
 });
 
+Route::get('/expense-categories', function () {
+    return view('expense_categories');
+});
+
 
 Auth::routes();
 

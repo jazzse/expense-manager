@@ -10,5 +10,5 @@ class ExpenseCategories extends Model
         'name', 'description', 
     ];
 
-    protected $table = 'expense_category';
+    protected $table = 'expense_categories';
 }

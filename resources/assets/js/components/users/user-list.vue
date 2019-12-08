@@ -13,9 +13,9 @@
           <tbody  @click='showModalUpdate()'></tbody>
         </table>
         <div>
-            <b-modal ref="update-modal" id="updateModal" title="Update Users" :hide-footer="true">
+            <b-modal ref="update-modal" id="updateModal" title="Update User" :hide-footer="true">
                 <template v-slot:modal-header="{ close }">
-                    <h5>Update Role</h5>
+                    <h5>Update User</h5>
                 </template>
                 <template v-slot:default="{ hide }">
                 <b-form action="/api/user/list/getUser.id" method="POST" @submit.prevent="updateUser()" name="updateUserForm" id="updateUserForm">

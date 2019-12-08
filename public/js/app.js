@@ -38038,6 +38038,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('role-list', __webpack_req
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('role-form', __webpack_require__(305));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('user-list', __webpack_require__(308));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('user-form', __webpack_require__(311));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('ec-list', __webpack_require__(333));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('ec-form', __webpack_require__(336));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_bootstrap_vue__["a" /* default */]);
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuejs_datatable__["a" /* VuejsDatatableFactory */]);
 
@@ -96971,7 +96973,11 @@ var render = function() {
       [
         _c("b-modal", {
           ref: "update-modal",
-          attrs: { id: "updateModal", title: "Add Role", "hide-footer": true },
+          attrs: {
+            id: "updateModal",
+            title: "Update Role",
+            "hide-footer": true
+          },
           scopedSlots: _vm._u([
             {
               key: "modal-header",
@@ -97591,7 +97597,7 @@ var render = function() {
           ref: "update-modal",
           attrs: {
             id: "updateModal",
-            title: "Update Users",
+            title: "Update User",
             "hide-footer": true
           },
           scopedSlots: _vm._u([
@@ -97599,7 +97605,7 @@ var render = function() {
               key: "modal-header",
               fn: function(ref) {
                 var close = ref.close
-                return [_c("h5", [_vm._v("Update Role")])]
+                return [_c("h5", [_vm._v("Update User")])]
               }
             },
             {
@@ -98115,6 +98121,627 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 315 */,
+/* 316 */,
+/* 317 */,
+/* 318 */,
+/* 319 */,
+/* 320 */,
+/* 321 */,
+/* 322 */,
+/* 323 */,
+/* 324 */,
+/* 325 */,
+/* 326 */,
+/* 327 */,
+/* 328 */,
+/* 329 */,
+/* 330 */,
+/* 331 */,
+/* 332 */,
+/* 333 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(33)
+/* script */
+var __vue_script__ = __webpack_require__(334)
+/* template */
+var __vue_template__ = __webpack_require__(335)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/expense_categories/ec-list.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-69c0a998", Component.options)
+  } else {
+    hotAPI.reload("data-v-69c0a998", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 334 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var categoryID = '';
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            categories: [],
+            display_name: ' ',
+            description: ' ',
+            sample: ' ',
+            description_update: ' ',
+            created_at: ' ',
+            dataTable: null,
+            getCategory: []
+        };
+    },
+    methods: {
+        showModalUpdate: function showModalUpdate(event) {
+            $('tr').on('click', function () {
+                categoryID = $(this).prop('id');console.log(categoryID);
+            });
+            this.$refs['update-modal'].show();
+            axios.get('api/category/list/' + categoryID).then(function (response) {
+                this.getCategory = response.data;
+            }.bind(this));
+        },
+        updateCategory: function updateCategory() {
+            var formData = new FormData(document.getElementById("updateCategoryForm"));
+            axios.post('/api/category/list/update/' + categoryID, formData).then(function (response) {
+                this.getCategory = response.data;
+            }.bind(this));
+            this.$refs['update-modal'].hide();
+        },
+        deleteCategory: function deleteCategory() {
+            $('tr').on('click', function () {
+                categoryID = $(this).prop('id');console.log(categoryID);
+            });
+            axios.post('/api/category/list/delete/' + categoryID).then(function (response) {
+                this.getCategory = response.data;
+            }.bind(this));
+            this.$refs['update-modal'].hide();
+            $('tr[id=' + categoryID + ']').remove();
+        }
+    }, mounted: function mounted() {
+        var $this = this;
+        axios.get('api/category/list').then(function (response) {
+            $this.categories = response.data;
+            var table = $('#datatable').DataTable();
+            $.each($this.categories, function (key, value) {
+                var id = value.id;
+                table.row.add([value.name, value.description, value.created_at]).node().id = id.toString();
+                table.draw(false);
+            });
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+});
+$(document).ready(function () {
+    $('table').DataTable();
+});
+
+/***/ }),
+/* 335 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row" }),
+    _vm._v(" "),
+    _c(
+      "table",
+      { staticClass: "table table-striped", attrs: { id: "datatable" } },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("tbody", { on: { click: _vm.showModalUpdate } })
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      [
+        _c("b-modal", {
+          ref: "update-modal",
+          attrs: {
+            id: "updateModal",
+            title: "Update Category",
+            "hide-footer": true
+          },
+          scopedSlots: _vm._u([
+            {
+              key: "modal-header",
+              fn: function(ref) {
+                var close = ref.close
+                return [_c("h5", [_vm._v("Update Category")])]
+              }
+            },
+            {
+              key: "default",
+              fn: function(ref) {
+                var hide = ref.hide
+                return [
+                  _c(
+                    "b-form",
+                    {
+                      attrs: {
+                        action: "/api/category/list/getCategory.id",
+                        method: "POST",
+                        name: "updateCategoryForm",
+                        id: "updateCategoryForm"
+                      },
+                      on: {
+                        submit: function($event) {
+                          $event.preventDefault()
+                          return _vm.updateCategory()
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "b-form-group",
+                        {
+                          attrs: {
+                            "label-cols": "4",
+                            "label-cols-lg": "3",
+                            label: "Display Name",
+                            "label-for": "input-default"
+                          }
+                        },
+                        [
+                          _c("b-form-input", {
+                            attrs: {
+                              name: "display_name_update",
+                              id: "input-default"
+                            },
+                            model: {
+                              value: _vm.getCategory.name,
+                              callback: function($$v) {
+                                _vm.$set(_vm.getCategory, "name", $$v)
+                              },
+                              expression: "getCategory.name"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "b-form-group",
+                        {
+                          attrs: {
+                            "label-cols": "4",
+                            "label-cols-lg": "3",
+                            label: "Description",
+                            "label-for": "input-default"
+                          }
+                        },
+                        [
+                          _c("b-form-input", {
+                            attrs: {
+                              name: "description_update",
+                              id: "input-default"
+                            },
+                            model: {
+                              value: _vm.getCategory.description,
+                              callback: function($$v) {
+                                _vm.$set(_vm.getCategory, "description", $$v)
+                              },
+                              expression: "getCategory.description"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "b-button",
+                        {
+                          attrs: {
+                            size: "sm",
+                            variant: "danger",
+                            type: "button"
+                          },
+                          on: {
+                            click: function($event) {
+                              return _vm.deleteCategory()
+                            }
+                          }
+                        },
+                        [_vm._v("Delete")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "b-button",
+                        {
+                          staticClass: "float-right",
+                          attrs: {
+                            size: "sm",
+                            variant: "success",
+                            type: "submit"
+                          }
+                        },
+                        [_vm._v("Update")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "b-button",
+                        {
+                          staticClass: "float-right",
+                          attrs: { size: "sm", variant: "default" },
+                          on: {
+                            click: function($event) {
+                              return _vm.$bvModal.hide("updateModal")
+                            }
+                          }
+                        },
+                        [_vm._v("Cancel")]
+                      )
+                    ],
+                    1
+                  )
+                ]
+              }
+            }
+          ])
+        })
+      ],
+      1
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Display Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Description")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Created at")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-69c0a998", module.exports)
+  }
+}
+
+/***/ }),
+/* 336 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(33)
+/* script */
+var __vue_script__ = __webpack_require__(337)
+/* template */
+var __vue_template__ = __webpack_require__(338)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/expense_categories/ec-form.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-35c782be", Component.options)
+  } else {
+    hotAPI.reload("data-v-35c782be", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 337 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            categories: [],
+            display_name: ' ',
+            description: ' ',
+            created_at: ' '
+        };
+    },
+    methods: {
+        addCategory: function addCategory() {
+            axios.post('./api/category', { name: this.display_name, description: this.description }).then(function (response) {
+                this.categories = response.data;
+            }.bind(this));
+            var table = $('#datatable').DataTable();
+            table.row.add([this.display_name, this.description, this.created_at]).draw(false);
+            this.$refs['add-modal'].hide();
+        },
+        onClickApp: function onClickApp(event) {
+            alert('sample');
+        }
+    }
+});
+
+/***/ }),
+/* 338 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _c(
+        "b-button",
+        {
+          directives: [
+            {
+              name: "b-modal",
+              rawName: "v-b-modal.addModal",
+              modifiers: { addModal: true }
+            }
+          ],
+          staticClass: "float-right",
+          attrs: { variant: "primary" }
+        },
+        [_vm._v("Add Category")]
+      ),
+      _vm._v(" "),
+      _c("b-modal", {
+        ref: "add-modal",
+        attrs: { id: "addModal", title: "Add Category", "hide-footer": true },
+        scopedSlots: _vm._u([
+          {
+            key: "modal-header",
+            fn: function(ref) {
+              var close = ref.close
+              return [_c("h5", [_vm._v("Add Category")])]
+            }
+          },
+          {
+            key: "default",
+            fn: function(ref) {
+              var hide = ref.hide
+              return [
+                _c(
+                  "b-form",
+                  {
+                    attrs: { action: "/api/category", method: "POST" },
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.addCategory()
+                      }
+                    }
+                  },
+                  [
+                    _c(
+                      "b-form-group",
+                      {
+                        attrs: {
+                          "label-cols": "4",
+                          "label-cols-lg": "3",
+                          label: "Display Name",
+                          "label-for": "input-default"
+                        }
+                      },
+                      [
+                        _c("b-form-input", {
+                          attrs: { name: "display_name", id: "input-default" },
+                          model: {
+                            value: _vm.display_name,
+                            callback: function($$v) {
+                              _vm.display_name = $$v
+                            },
+                            expression: "display_name"
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "b-form-group",
+                      {
+                        attrs: {
+                          "label-cols": "4",
+                          "label-cols-lg": "3",
+                          label: "Description",
+                          "label-for": "input-default"
+                        }
+                      },
+                      [
+                        _c("b-form-input", {
+                          attrs: { name: "description", id: "input-default" },
+                          model: {
+                            value: _vm.description,
+                            callback: function($$v) {
+                              _vm.description = $$v
+                            },
+                            expression: "description"
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "b-button",
+                      {
+                        staticClass: "float-right",
+                        attrs: {
+                          size: "sm",
+                          variant: "success",
+                          type: "submit"
+                        }
+                      },
+                      [_vm._v("Save")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "b-button",
+                      {
+                        staticClass: "float-right",
+                        attrs: { size: "sm", variant: "default" },
+                        on: {
+                          click: function($event) {
+                            return _vm.$bvModal.hide("addModal")
+                          }
+                        }
+                      },
+                      [_vm._v("Cancel")]
+                    )
+                  ],
+                  1
+                )
+              ]
+            }
+          }
+        ])
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-35c782be", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

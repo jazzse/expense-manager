@@ -27,6 +27,8 @@ Vue.component('role-list', require('./components/roles/role-list.vue'));
 Vue.component('role-form', require('./components/roles/role-form.vue'));
 Vue.component('user-list', require('./components/users/user-list.vue'));
 Vue.component('user-form', require('./components/users/user-form.vue'));
+Vue.component('ec-list', require('./components/expense_categories/ec-list.vue'));
+Vue.component('ec-form', require('./components/expense_categories/ec-form.vue'));
 Vue.use(BootstrapVue)
 Vue.use( VuejsDatatableFactory );
 
